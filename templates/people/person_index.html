@@ -1,0 +1,17 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}People{% endblock %}
+{% block content %}
+<table width=100%>
+<tr bgcolor="aabbcc"><td colspan="3">
+<font size="5" color="white">Personal List</font>
+</td></tr>
+<tr valign="top"><td width=30% bgcolor="aaaaaa"><font color="white" size="5">
+{% for p in pList %}
+    <li>
+    <a style="color: {% cycle Red,Green %};" href="{% url 'people-details' p.id%}">{{ p.name }}</a>
+    </li>
+{% endfor %}
+</font></td></tr>
+{% endblock %}
+
