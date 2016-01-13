@@ -1,0 +1,22 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}Contact Us{% endblock %}
+{% block content %}
+<table bgcolor="aaccdd">
+<tr bgcolor="1111cc">
+    <td colspan="4"><font color="white" size="5">
+        Contact Us:
+    </font></td>
+</tr>
+<tr>
+    <th>{{ eForm.title.label_tag }}</th>
+    <td>{{ eForm.title }}</td>
+    <th>{{ eForm.sender.label_tag }}:</th>
+    <td>{{ eForm.sender }}</td>
+</tr>
+<tr>
+    <th>{{ eForm.text.label_tag }}:</th>
+    <td colspan="3">{{ eForm.text }}</td>
+</tr>
+</table>
+{% endblock %}
