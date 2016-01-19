@@ -1,0 +1,14 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}Blog Form{% endblock %}
+{% block content %}
+<h3>{{ message }}</h3>
+
+<form method="post" action=".">
+<table>
+{{ bForm }}
+</table>
+
+<input type="submit" name="submit" value="Add" />
+</form>
+{% endblock %}
