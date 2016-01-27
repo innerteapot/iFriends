@@ -1,0 +1,22 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}Blog List{% endblock %}
+{% block content %}
+<table width=100%>
+<tr bgcolor="aabbcc"><td colspan="3">
+<font size="5" color="white">Blog List</font>
+</td></tr>
+<tr valign="top"><td width=30% bgcolor=" aadddd ">
+<font size="5">
+<a href="/generic/blog_add">[Add]</a>
+{% for q in object_list %}
+    <li>
+        {{ q.title }}
+        <font size="3">
+        <a href="/generic/blog_update/{{q.id}}/">[Update]</a>
+        <a href="/generic/blog_delete/{{q.id}}/">[Delete]</a>
+        </font>
+    </li>
+{% endfor %}
+</font></td></tr>
+{% endblock %}

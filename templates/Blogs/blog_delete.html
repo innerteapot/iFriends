@@ -1,0 +1,20 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}Blog{% endblock %}
+{% block content %}
+<table width=100%>
+<tr bgcolor="aabbcc"><td colspan="3">
+<font size="5" color="white">Blog Delete</font>
+</td></tr>
+<tr valign="top"><td width=30% bgcolor="aadddd">
+<font color="white" size="5">
+<form action="" method="post">
+    <p><strong>{{ object.title }}</strong></p>
+    <p>{{ object.text }}</p>
+<table>
+{{ form }}
+</table>
+<input type="submit" value="Delete"/>
+</form>
+</font></td></tr>
+{% endblock %}

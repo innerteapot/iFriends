@@ -1,0 +1,22 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}Quote List{% endblock %}
+{% block content %}
+<table width=100%>
+<tr bgcolor="aabbcc"><td colspan="3">
+<font size="5" color="white">Quote List</font>
+</td></tr>
+<tr valign="top"><td width=30% bgcolor=" aadddd ">
+<font size="5">
+<a href="/generic/quote_add">[Add]</a>
+{% for q in object_list %}
+    <li>
+        {{ q.text }}
+        <font size="3">-{{ q.by }}
+        <a href="/generic/quote_update/{{q.id}}/">[Update]</a>
+        <a href="/generic/quote_delete/{{q.id}}/">[Delete]</a>
+        </font>
+    </li>
+{% endfor %}
+</font></td></tr>
+{% endblock %}

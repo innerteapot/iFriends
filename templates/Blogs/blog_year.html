@@ -1,0 +1,18 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}Generic Blog List{% endblock %}
+{% block content %}
+<table width=100%>
+<tr bgcolor="aabbcc"><td colspan="3">
+<font size="5" color="white">Blog Archive {{ year }}</font>
+</td></tr>
+<tr valign="top"><td width=30% bgcolor="aaddee">
+<font color="white" size="5">
+{% for date in date_list %}
+    <li>
+    <a href="/generic/blog_arch/{{date|date:"Y"}}/{{date|date:"b"}}/">
+        {{ date|date:"F" }}</a>
+    </li>
+{% endfor %}
+</font></td></tr>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}Generic Blog List{% endblock %}
+{% block content %}
+<table width=100%>
+<tr bgcolor="aabbcc"><td colspan="3">
+<font size="5" color="white">
+Blog Archive {{ month|date:"F Y" }}
+</font></td></tr>
+<tr valign="top"><td width=30% bgcolor="aaddee">
+<font color="white" size="5">
+{% for blog in object_list %}
+    <li>
+    <a href="/generic/blog_details/{{blog.id}}/">{{ blog }}</a>
+    </li>
+{% endfor %}
+</font></td></tr>
+{% endblock %}
