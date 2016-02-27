@@ -8,6 +8,7 @@ gender_list = (('M', 'Male'), ('F', 'Female' ))
 class Blog(models.Model):
     title = models.CharField('Title', max_length=200)
     text = models.TextField('Text', max_length=2048)
+    date = models.DateTimeField('Last Modified')
 
     def __str__(self):
         return '%s' % (self.title)

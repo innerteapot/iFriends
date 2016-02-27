@@ -4,11 +4,18 @@
 <table width=100%>
 <tr bgcolor="aabbcc"><td colspan="3">
 <font size="12" color="white">Personal Information</font>
+<a href="{% url 'people-form' pID=p.id %}">[Edit]</a>
 </td></tr>
 <tr valign="top"><td width=30% bgcolor="aaaaaa"><font color="white" size="5">
     <li>Name: {{p.name}}</li>
-    <li>Birthday: {{p.birthday}}</li>
-    <li>Gender: {{p.gender}}</li>
+    <li>Birthday: {{ p.birthday|date:"m/d/Y" }}</li>
+    <li>Gender:
+         {% ifequal p.gender "M" %}
+             Bloke
+         {% else %}
+             Sheila
+         {% endifequal %}
+    </li>
     <li>Desc: {{p.desc}}</li>
 </font></td>
 <td width=40% bgcolor="aa99aa"><font color="white" size="4">
@@ -19,6 +26,39 @@
     <li>Email: {{p.email}}</li>
     <li>Website: {{p.favoriteURL}}</li>
 </td></tr>
+<tr>
+<td width="30%" bgcolor="556677" valign="top">
+{% with p.friends.all as fl %}
+    <font color="white" size="4">
+    <h3>
+        {{ fl|length|yesno:"iFriend,No Friend"}}{{fl|length|pluralize}}
+    </h3>
+    </font>
+{% for f in fl %}
+ <li>{{ f.name }}</li>
+{% endfor %}
+{% endwith %}
+</td>
+<td width="70%" bgcolor="555555" colspan="2" valign="top">
+{% with p.blogs.all as bl %}
+    <font color="white" size="4">
+    <h3>
+        {{ bl|length|yesno:"Blog,No Blog"}}
+        Entr{{ bl|length|pluralize:"y,ies"}}
+        <a href="
+        {% url 'add-blog' pID=p.id %}
+        ">[+]</a>
+    </h3>
+{% for b in bl %}
+<li>
+    {{ b.title }} -
+    <font size="2"> {{ b.date|date:"M d, Y g:ma" }}</font>
+</li>
+{% endfor %}
+{% endwith %}
+    </font>
+</td>
+</tr>
 </table>
 {% endblock %}
 

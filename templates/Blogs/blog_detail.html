@@ -1,11 +1,12 @@
 {% extends "iFriends_base.html" %}
+{% load custom_filters %}
 
 {% block title %}Generic Blog Details{% endblock %}
 {% block content %}
 <table width="400">
 <tr bgcolor="aabbcc"><td colspan="3">
 <font size="5" color="white">{{ blog.title }}</font>
-<font size="2">{{ blog.date }}</font>
+<font size="2">{{ blog.date|longTime }}</font>
 </td></tr>
 <tr valign="top"><td bgcolor="ddffff">
 {{ blog.text }}

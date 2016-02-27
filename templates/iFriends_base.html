@@ -5,12 +5,14 @@
     <title>{% block title %}iFriends{% endblock %}</title>
 </head>
 <body>
+{% load custom_tags %}
 <table width=100% bgcolor="111177">
 <tr><td>
 <font size="12" color="white">iFriends Webspace</font>
 </td></tr>
-<tr><td>
-<font size="3" color="white">Home</font>
+<tr>
+<td bgcolor="bbbbbbb">
+    {% navLink %}
 </td></tr>
 </table>
 {% block content %}{% endblock %}
