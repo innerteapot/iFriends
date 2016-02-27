@@ -1,0 +1,38 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}Home Page{% endblock %}
+{% block content %}
+{% load custom_tags %}
+{% load custom_filters %}
+<table width=100%>
+<tr bgcolor="aabbcc"><td colspan="3">
+<font size="5" color="white">Home Page</font>
+</td></tr>
+<tr valign="top">
+<td width="30%">
+<h2>People</h2>
+{% for p in pList %}
+    <li>
+    <a href="{% url 'people-details' p.id %}">
+        {{ p.name }}</a>
+    </li>
+{% endfor %}
+</td>
+<td width="30%">
+<h2>Largest Blog</h2>
+    {% getLargestBlog bList %}
+    <a href="/generic/blog_details/{{ largestBlog.id }}">
+        {{ largestBlog.title }}</a>
+</td>
+<td width="40%">
+    {% include "quote.html" %}
+</td>
+</tr>
+</table>
+<p>{{ 'MOOO' | teaLower }}</p>
+
+{% teaUpper %}
+I'm a teapot!!!<br/>
+{% endTeaUpper %}
+
+{% endblock %}
