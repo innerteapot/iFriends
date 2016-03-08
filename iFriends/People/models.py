@@ -16,6 +16,11 @@ class Blog(models.Model):
     class Admin:
         pass
 
+    class Meta:
+        permissions = (
+            ('can_blog', 'Allowed to Blog'),
+        )
+
 class Person(models.Model):
     userID = models.ForeignKey(User, unique=True)
     name = models.CharField('name', max_length=200)
@@ -33,3 +38,7 @@ class Person(models.Model):
     class Admin:
         pass
 
+    class Meta:
+        permissions = (
+            ('can_add_friends', 'Can Add Friends'),
+        )
