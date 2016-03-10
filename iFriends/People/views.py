@@ -7,6 +7,9 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django import forms
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
+from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
@@ -15,6 +18,7 @@ def index(request):
     return render_to_response('people/person_index.html', {'pList': pList})
 
 
+@login_required
 def details(request, pID='0', opts=()):
     rDict = {}
     p = get_object_or_404(Person, pk=pID)
@@ -23,7 +27,9 @@ def details(request, pID='0', opts=()):
     rDict['quotes'] = quotes
     pageLinks = ({'name': 'People', 'value': '/People/'})
     rDict['pageLinks'] = pageLinks
-    return render_to_response('people/person_details.html', rDict)
+    return render_to_response('people/person_details.html', rDict,
+        context_instance = RequestContext(request)
+    )
 
 
 def blogs(request, pID='0'):
@@ -110,8 +116,11 @@ def add_blog_form(request, pID='0'):
                 'date', 
             )
 
+    if not request.user.has_perm('People.can_blog'):
+        return HttpResponseRedirect('/')
+
     message = 'Unknown Request'
-    p = get_object_or_404(Person, pk=pID)
+    p = get_object_or_404(Person, userID=request.user)
     bf = BlogForm(instance=p)
 
     if request.method == 'GET':
@@ -137,3 +146,12 @@ def add_blog_form(request, pID='0'):
         'people/add_blog_form.html',
          {'bForm':bf, 'message': message})
 
+@csrf_exempt
+def add_friends(request, pID='0', fID='0'):
+    #pID=request.user
+
+    if request.user.has_perm('People.can_add_friends'):
+        p = get_object_or_404(Person, userID=pID)
+        p.friends.add(fID)
+
+    return HttpResponseRedirect('/')

@@ -19,6 +19,8 @@ urlpatterns = patterns('',
     url(r'^Quote/', include('iFriends.Quotes.urls')),
     url(r'^Home/contact/$', 'iFriends.Home.views.contact_view'),
     url(r'^NewUser/$', 'iFriends.Home.views.create_user'),
+    url(r'^Login/$', 'iFriends.Home.views.login_user'),
+    url(r'^Logout/$', 'iFriends.Home.views.logout_user'),
 )
 
 class QuoteList(ListView):

@@ -11,5 +11,6 @@ urlpatterns = patterns('iFriends.People.views',
     url(r'^Info/$', 'details'),
     url(r'^Info/(?P<pID>\d+)/$', 'details'),
     url(r'^AddBlogForm/(?P<pID>\d+)/$', 'add_blog_form', name='add-blog'),
+    url(r'^AddFriend/(?P<pID>\d+)/(?P<fID>\d+)/$', 'add_friends', name='add-friends'),
 )
 

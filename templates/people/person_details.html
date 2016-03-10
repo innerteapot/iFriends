@@ -45,9 +45,13 @@
     <h3>
         {{ bl|length|yesno:"Blog,No Blog"}}
         Entr{{ bl|length|pluralize:"y,ies"}}
-        <a href="
-        {% url 'add-blog' pID=p.id %}
-        ">[+]</a>
+        {% if perms.People.can_blog %}
+          {% ifequal user p.userID %}
+            <a href="
+            {% url 'add-blog' pID=p.id %}
+            ">[+]</a>
+          {% endifequal %}
+        {% endif %}
     </h3>
 {% for b in bl %}
 <li>

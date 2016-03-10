@@ -9,27 +9,32 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.contrib.auth.models import User, Group
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login, logout
+from django.template import RequestContext
 
 # Create your views here.
 
 class EmailForm(forms.Form):
-        title = forms.CharField(max_length=50,
-                widget=forms.TextInput(attrs={'size':'50'}))
-        sender = forms.EmailField(max_length=30,
-                widget=forms.TextInput(attrs={'size':'30'}))
-        date = forms.DateTimeField()
-        text = forms.CharField(widget=forms.Textarea(
+    title = forms.CharField(max_length=50,
+            widget=forms.TextInput(attrs={'size':'50'}))
+    sender = forms.EmailField(max_length=30,
+            widget=forms.TextInput(attrs={'size':'30'}))
+    date = forms.DateTimeField()
+    text = forms.CharField(widget=forms.Textarea(
                                 attrs={'rows':'6','cols':'75'}))
 
 gender_list = (('M', 'Male'), ('F', 'Female' ))
 class NewUserForm(forms.Form):
-        username = forms.CharField(max_length=30)
-        password = forms.CharField(max_length=20,
-                                   widget=forms.PasswordInput())
-        first = forms.CharField(max_length=20)
-        last = forms.CharField(max_length=20)
-        gender = forms.ChoiceField(choices=gender_list)
-        email = forms.EmailField(max_length=30)
+    username = forms.CharField(max_length=30)
+    password = forms.CharField(max_length=20, widget=forms.PasswordInput())
+    first = forms.CharField(max_length=20)
+    last = forms.CharField(max_length=20)
+    gender = forms.ChoiceField(choices=gender_list)
+    email = forms.EmailField(max_length=30)
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=30)
+    password = forms.CharField(max_length=20, widget=forms.PasswordInput())
 
 def contact_view(request):
     eForm = EmailForm()
@@ -38,9 +43,16 @@ def contact_view(request):
 def home_view(request):
     quotes = Quote.objects.all()
     pList = Person.objects.all()
-    bList = Blog.objects.all()
-    return render_to_response('home/homepage.html', {
-        'quotes': quotes, 'pList': pList, 'bList': bList})
+
+    if request.user.is_authenticated():
+        bList = Blog.objects.all()
+    else:
+        bList = []
+
+    return render_to_response('home/homepage.html', 
+        {'quotes': quotes, 'pList': pList, 'bList': bList},
+        context_instance = RequestContext(request)
+    )
 
 @csrf_exempt
 def create_user(request):
@@ -89,4 +101,35 @@ def create_user(request):
                 'uForm': uForm,
                 'message': message })
 
+@csrf_exempt
+def login_user(request, next= '/'):
+    message = 'Login User'
+    lForm = LoginForm()
+    if request.GET.has_key('next'):
+        next = request.GET['next']
+
+    if request.method == 'POST':
+        if request.POST['submit'] == 'Login':
+            postDict = request.POST.copy()
+            lForm = LoginForm(postDict)
+            if lForm.is_valid():
+                uName = request.POST['username']
+                uPass = request.POST['password']
+                user = authenticate(username=uName, password=uPass)
+                if user is not None:
+                    if user.is_active:
+                        login(request, user)
+                        return HttpResponseRedirect(next)
+                    else:
+                        message = 'Account Deactivated'
+                else:
+                    message = 'Login Incorrect'
+
+    return render_to_response('registration/login.html',{
+                'lForm': lForm,
+                'message': message })
+
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect('/Login')
 
