@@ -19,7 +19,9 @@
     <li>Desc: {{p.desc}}</li>
 </font></td>
 <td width=40% bgcolor="aa99aa"><font color="white" size="4">
+{% if showQuotes == True %}
 {% include "quote.html" %}
+{% endif %}
 </font></td>
 <td width=30%>
     <h3>Contact Info</h3>

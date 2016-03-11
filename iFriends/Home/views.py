@@ -12,8 +12,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from django.template import RequestContext
 
-# Create your views here.
-
 class EmailForm(forms.Form):
     title = forms.CharField(max_length=50,
             widget=forms.TextInput(attrs={'size':'50'}))
@@ -35,6 +33,9 @@ class NewUserForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=30)
     password = forms.CharField(max_length=20, widget=forms.PasswordInput())
+    quotes   = forms.BooleanField(required=False)
+
+# Create your views here.
 
 def contact_view(request):
     eForm = EmailForm()
@@ -50,7 +51,12 @@ def home_view(request):
         bList = []
 
     return render_to_response('home/homepage.html', 
-        {'quotes': quotes, 'pList': pList, 'bList': bList},
+        {
+            'quotes': quotes, 
+            'pList': pList, 
+            'bList': bList,
+            'showQuotes' : request.session['show_quotes'],
+        },
         context_instance = RequestContext(request)
     )
 
@@ -105,25 +111,41 @@ def create_user(request):
 def login_user(request, next= '/'):
     message = 'Login User'
     lForm = LoginForm()
+
+    if request.method == 'GET':
+        request.session.set_test_cookie()
+
     if request.GET.has_key('next'):
         next = request.GET['next']
 
     if request.method == 'POST':
-        if request.POST['submit'] == 'Login':
-            postDict = request.POST.copy()
-            lForm = LoginForm(postDict)
-            if lForm.is_valid():
-                uName = request.POST['username']
-                uPass = request.POST['password']
-                user = authenticate(username=uName, password=uPass)
-                if user is not None:
-                    if user.is_active:
-                        login(request, user)
-                        return HttpResponseRedirect(next)
+        if request.session.test_cookie_worked():
+            request.session.delete_test_cookie()
+
+            if request.POST['submit'] == 'Login':
+                postDict = request.POST.copy()
+                lForm = LoginForm(postDict)
+                if lForm.is_valid():
+                    uName = request.POST['username']
+                    uPass = request.POST['password']
+                    user = authenticate(username=uName, password=uPass)
+
+                    if 'quotes' in request.POST:
+                        request.session['show_quotes'] = True
                     else:
-                        message = 'Account Deactivated'
-                else:
-                    message = 'Login Incorrect'
+                        request.session['show_quotes'] = False
+
+                    if user is not None:
+                        if user.is_active:
+                            login(request, user)
+                            return HttpResponseRedirect(next)
+                        else:
+                            message = 'Account Deactivated'
+
+                    else:
+                        message = 'Login Incorrect'
+        else:
+            message = "Please enable cookies and try again."
 
     return render_to_response('registration/login.html',{
                 'lForm': lForm,

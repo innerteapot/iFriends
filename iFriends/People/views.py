@@ -11,6 +11,16 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
+class BlogForm(forms.ModelForm): 
+    class Meta: 
+        model = Blog 
+        fields = (
+            'title', 
+            'text', 
+            'date', 
+        )
+
+
 # Create your views here.
 
 def index(request):
@@ -27,6 +37,7 @@ def details(request, pID='0', opts=()):
     rDict['quotes'] = quotes
     pageLinks = ({'name': 'People', 'value': '/People/'})
     rDict['pageLinks'] = pageLinks
+    rDict['showQuotes'] = request.session['show_quotes']
     return render_to_response('people/person_details.html', rDict,
         context_instance = RequestContext(request)
     )
@@ -92,32 +103,19 @@ def person_form(request, pID='0'):
 
 
 def blog_form(request, pID='0'):
-    class BlogForm(forms.ModelForm): 
-        class Meta: 
-            model = Blog 
-            fields = (
-                'title', 
-                'text', 
-                'date', 
-            )
-
     p = get_object_or_404(Blog, pk=pID)
     pForm = BlogForm(instance=p)
     return render_to_response('people/blog_form.html', {'pForm':pForm})
 
+
 @csrf_exempt
 def add_blog_form(request, pID='0'):
-    class BlogForm(forms.ModelForm): 
-        class Meta: 
-            model = Blog 
-            fields = (
-                'title', 
-                'text', 
-                'date', 
-            )
-
     if not request.user.has_perm('People.can_blog'):
         return HttpResponseRedirect('/')
+
+    if 'session_blog' in request.session:
+        return HttpResponseRedirect("/generic/blog_details/%d" %
+                     request.session['session_blog'])
 
     message = 'Unknown Request'
     p = get_object_or_404(Person, userID=request.user)
@@ -137,6 +135,7 @@ def add_blog_form(request, pID='0'):
                     p.blogs.add(bObj)
                     p.save()
                     message = 'Blog added to %s.' % p.name
+                    request.session['session_blog'] = bObj.id
                 except:
                     message = 'Database Error.'
             else:
@@ -145,6 +144,27 @@ def add_blog_form(request, pID='0'):
     return render_to_response(
         'people/add_blog_form.html',
          {'bForm':bf, 'message': message})
+
+@csrf_exempt
+def update_blog(request, bID='0'):
+    blog = get_object_or_404(Blog, pk=bID)
+    bf = BlogForm(instance=blog)
+    message = 'Update Blog'
+
+    if request.method == 'POST':
+        if request.POST['submit'] == 'Update':
+            blog.title = request.POST['title']
+            blog.text = request.POST['text']
+            blog.date = datetime.now()
+            try:
+                blog.save()
+                return HttpResponseRedirect("/generic/blog_details/%d" % blog.id)
+            except:
+                message = 'Database Error.'
+
+    return render_to_response('people/update_blog_form.html',
+         {'bForm':bf, 'message': message},
+         context_instance = RequestContext(request))
 
 @csrf_exempt
 def add_friends(request, pID='0', fID='0'):
