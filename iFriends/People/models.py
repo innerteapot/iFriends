@@ -13,13 +13,14 @@ class Blog(models.Model):
     def __str__(self):
         return '%s' % (self.title)
 
-    class Admin:
-        pass
+    def blog_size (self):
+        return len(self.text)
 
     class Meta:
         permissions = (
             ('can_blog', 'Allowed to Blog'),
         )
+
 
 class Person(models.Model):
     userID = models.ForeignKey(User, unique=True)
@@ -35,10 +36,8 @@ class Person(models.Model):
     def __str__(self):
         return '%s' % (self.name)
 
-    class Admin:
-        pass
-
     class Meta:
         permissions = (
             ('can_add_friends', 'Can Add Friends'),
         )
+

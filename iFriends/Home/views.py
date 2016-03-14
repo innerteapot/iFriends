@@ -50,21 +50,20 @@ def home_view(request):
     else:
         bList = []
 
-    return render_to_response('home/homepage.html', 
+    return render_to_response('home/homepage.html',
         {
-            'quotes': quotes, 
-            'pList': pList, 
-            'bList': bList,
-            'showQuotes' : request.session['show_quotes'],
+            'quotes': quotes,
+            'pList': pList,
+            'bList': bList
         },
         context_instance = RequestContext(request)
     )
 
 @csrf_exempt
 def create_user(request):
-    class PersonForm(forms.ModelForm): 
-        class Meta: 
-            model = Person 
+    class PersonForm(forms.ModelForm):
+        class Meta:
+            model = Person
             fields = '__all__'
 
     message = 'Create New User'

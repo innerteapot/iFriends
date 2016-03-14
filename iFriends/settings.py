@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'iFriends.Comments',
     'iFriends.Quotes',
     'iFriends.Custom',
+    'iFriends.Poll',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -62,13 +63,14 @@ WSGI_APPLICATION = 'iFriends.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'iFriendsDB',
-        'USER': 'dAdmin',
-        'PASSWORD': 'test',
-        'HOST': '127.0.0.1',
+        'NAME': 'innerteapot$iFriendsDB',
+        'USER': 'innerteapot',
+        'PASSWORD': 'SbHnH6bQzpyeiCb8BEb6dKu35uS8z7Vf',
+        'HOST': 'innerteapot.mysql.pythonanywhere-services.com',
         'PORT': '3306',
     }
 }
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
@@ -87,13 +89,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or
     # "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    "/home/darkvortex/src/iFriends/templates",
+    "/home/innerteapot/src/iFriends/templates",
 )
 
 LOGIN_URL ='/Login'
