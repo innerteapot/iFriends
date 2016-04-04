@@ -36,11 +36,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'iFriends.People',
-    'iFriends.Comments',
-    'iFriends.Quotes',
-    'iFriends.Custom',
-    'iFriends.Poll',
+    'People',
+    'Comments',
+    'Quotes',
+    'Custom',
+    'Poll',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,7 +54,7 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'iFriends.urls'
 
-WSGI_APPLICATION = 'iFriends.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
@@ -91,13 +91,29 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or
-    # "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    "/home/innerteapot/src/iFriends/templates",
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+# TEMPLATE_DIRS = (
+#     # Put strings here, like "/home/html/django_templates" or
+#     # "C:/www/django/templates".
+#     # Always use forward slashes, even on Windows.
+#     # Don't forget to use absolute paths, not relative paths.
+#     "/home/innerteapot/src/iFriends/templates",
+# )
 
 LOGIN_URL ='/Login'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

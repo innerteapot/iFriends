@@ -1,5 +1,5 @@
 from django.contrib import admin
-from iFriends.Poll.models import Opinion, UserPoll
+from Poll.models import Opinion, UserPoll
 
 # Register your models here.
 

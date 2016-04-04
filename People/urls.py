@@ -1,6 +1,6 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
-urlpatterns = patterns('iFriends.People.views',
+urlpatterns = patterns('People.views',
     url(r'^$', 'index', name='people-home'),
     url(r'^Contact/(?P<pID>\d+)/$', 'details'),
     url(r'^Birthday/(?P<pID>\d+)/$', 'details'),

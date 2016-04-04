@@ -1,0 +1,20 @@
+{% extends "admin/base_site.html" %}
+{% block title %}Blog Usage Report{% endblock %}
+
+{% block content %}
+<h1>Blog Usage Report</h1>
+<table>
+<tr>
+  <td>Person</td>
+  <td>Blog Count</td>
+  <td>Total Bytes</td>
+</tr>
+{% for item in uList %}
+  <tr align="center">
+    <td>{{ item.person.name }}</td>
+    <td>{{ item.count }}</td>
+    <td>{{ item.size }}</td>
+  </tr>
+{% endfor %}
+</table>
+{% endblock %}

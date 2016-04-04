@@ -1,8 +1,7 @@
-from django.shortcuts import render
 from django.shortcuts import HttpResponse
-from iFriends.People.models import Blog
-from iFriends.People.models import Person
-from iFriends.Quotes.models import Quote
+from People.models import Blog
+from People.models import Person
+from Quotes.models import Quote
 from django.shortcuts import render_to_response, get_object_or_404
 from django import forms
 from django.views.decorators.csrf import csrf_exempt
@@ -11,13 +10,13 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 
-class BlogForm(forms.ModelForm): 
-    class Meta: 
-        model = Blog 
+class BlogForm(forms.ModelForm):
+    class Meta:
+        model = Blog
         fields = (
-            'title', 
-            'text', 
-            'date', 
+            'title',
+            'text',
+            'date',
         )
 
 
@@ -60,18 +59,18 @@ def blogs(request, pID='0'):
 
 @csrf_exempt
 def person_form(request, pID='0'):
-    class PersonForm(forms.ModelForm): 
-        class Meta: 
-            model = Person 
+    class PersonForm(forms.ModelForm):
+        class Meta:
+            model = Person
             fields = (
-                'userID', 
-                'name', 
-                'birthday', 
-                'gender', 
-                'email', 
-                'favoriteURL', 
-                'desc', 
-                'friends', 
+                'userID',
+                'name',
+                'birthday',
+                'gender',
+                'email',
+                'favoriteURL',
+                'desc',
+                'friends',
                 'blogs')
 
     message = 'Unknown Request'

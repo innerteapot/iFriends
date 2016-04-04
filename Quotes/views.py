@@ -1,14 +1,13 @@
-from django.shortcuts import render
 from django.shortcuts import render_to_response, get_object_or_404
 from django import forms
 from django.views.decorators.csrf import csrf_exempt
-from iFriends.Quotes.models import Quote
+from models import Quote
 
 @csrf_exempt
 def quote_form(request, pID='0'):
-    class QuoteForm(forms.ModelForm): 
-        class Meta: 
-            model = Quote 
+    class QuoteForm(forms.ModelForm):
+        class Meta:
+            model = Quote
             fields = '__all__'
 
     message = 'Unknown Request'
@@ -38,9 +37,9 @@ def quote_form(request, pID='0'):
 
 @csrf_exempt
 def add_quote_form(request, pID='0'):
-    class QuoteForm(forms.ModelForm): 
-        class Meta: 
-            model = Quote 
+    class QuoteForm(forms.ModelForm):
+        class Meta:
+            model = Quote
             fields = '__all__'
 
     message = 'Unknown Request'

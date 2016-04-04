@@ -1,0 +1,6 @@
+{% extends "admin/change_form.html" %}
+
+{% block form_top %}
+    <a href="/People/Form/{{ form.data.id }}">
+        Edit Person {{ form.data.name }}</a>
+{% endblock %}

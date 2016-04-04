@@ -23,7 +23,7 @@ class Blog(models.Model):
 
 
 class Person(models.Model):
-    userID = models.ForeignKey(User, unique=True)
+    userID = models.OneToOneField(User)
     name = models.CharField('name', max_length=200)
     birthday = models.DateField('Birthday', blank=True, null=True)
     gender = models.CharField(max_length=1, choices=gender_list)

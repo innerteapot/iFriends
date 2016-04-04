@@ -1,5 +1,5 @@
 from django.db import models
-from iFriends.People.models import Person
+from People.models import Person
 
 # Create your models here.
 

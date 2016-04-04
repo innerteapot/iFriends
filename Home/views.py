@@ -1,12 +1,8 @@
-from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django import forms
-from iFriends.People.models import Person, Blog
-from iFriends.Quotes.models import Quote
-from django.shortcuts import get_object_or_404
+from People.models import Person, Blog
+from Quotes.models import Quote
 from django.http import HttpResponseRedirect
-from datetime import datetime
-from django.contrib.auth.models import User
 from django.contrib.auth.models import User, Group
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
