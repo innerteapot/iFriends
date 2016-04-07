@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^$', 'Home.views.home_view', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
+    url(r'^admin/logout/$', 'Home.views.logout_user'),
     url(r'^admin/blog_usage/$', 'Custom.views.blog_usage'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^People/', include('People.urls')),
