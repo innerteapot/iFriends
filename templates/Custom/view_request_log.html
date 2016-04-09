@@ -1,0 +1,19 @@
+{% extends "admin/base_site.html" %}
+{% block title %}Request Log Report{% endblock %}
+
+{% block content %}
+<h1>Request Log Report</h1>
+<table>
+<tr>
+<th>Date</th><th>User</th><th>IP Address</th><th>URL</th>
+</tr>
+{% for entry in logList %}
+    <tr>
+        <td>{{ entry.date }}</td>
+        <td>{{ entry.user }}</td>
+        <td>{{ entry.addr }}</td>
+        <td>{{ entry.url }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}

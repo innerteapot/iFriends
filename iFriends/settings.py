@@ -22,7 +22,7 @@ SECRET_KEY = 'gpmwo%)#uhz^7ltyy@xvn*zj0z46p@k@)^ng8f81sb*!jj5ak*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+#TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'Quotes',
     'Custom',
     'Poll',
+    'Log',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -50,6 +51,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'iFriends.middleware.custom.CustomRequestLogger',
+    'iFriends.middleware.custom.CustomViewLogger',
+    'iFriends.middleware.custom.CustomResponseLogger',
+    'iFriends.middleware.custom.CustomExceptionLogger',
+    'iFriends.middleware.custom.AddFooter',
+    'iFriends.middleware.custom.PersonIPAddressCapture',
 )
 
 ROOT_URLCONF = 'iFriends.urls'
