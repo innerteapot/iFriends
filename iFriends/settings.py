@@ -46,6 +46,7 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -125,3 +126,8 @@ TEMPLATES = [
 LOGIN_URL ='/Login'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+
+LOCALE_PATHS = (
+    os.path.join(PROJECT_PATH, '../locale'),
+)

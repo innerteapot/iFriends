@@ -7,6 +7,8 @@ from django.contrib.auth.models import User, Group
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from django.template import RequestContext
+from django.utils.translation import gettext
+from django.utils import translation
 
 class EmailForm(forms.Form):
     title = forms.CharField(max_length=50,
@@ -26,9 +28,11 @@ class NewUserForm(forms.Form):
     gender = forms.ChoiceField(choices=gender_list)
     email = forms.EmailField(max_length=30)
 
+siteLanguages = (('en', 'English'), ('de', 'German' ), ('es', 'Spanish'))
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=30)
     password = forms.CharField(max_length=20, widget=forms.PasswordInput())
+    Language = forms.ChoiceField(choices=siteLanguages)
     quotes   = forms.BooleanField(required=False)
 
 # Create your views here.
@@ -104,7 +108,7 @@ def create_user(request):
 
 @csrf_exempt
 def login_user(request, next= '/'):
-    message = 'Login User'
+    message = gettext('Login User')
     lForm = LoginForm()
 
     if request.method == 'GET':
@@ -133,6 +137,7 @@ def login_user(request, next= '/'):
                     if user is not None:
                         if user.is_active:
                             login(request, user)
+                            request.session[translation.LANGUAGE_SESSION_KEY] = request.POST['Language']
                             return HttpResponseRedirect(next)
                         else:
                             message = 'Account Deactivated'
