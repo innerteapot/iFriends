@@ -36,6 +36,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'People',
     'Comments',
     'Quotes',
@@ -52,12 +54,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'iFriends.middleware.custom.CustomRequestLogger',
-    'iFriends.middleware.custom.CustomViewLogger',
-    'iFriends.middleware.custom.CustomResponseLogger',
-    'iFriends.middleware.custom.CustomExceptionLogger',
-    'iFriends.middleware.custom.AddFooter',
-    'iFriends.middleware.custom.PersonIPAddressCapture',
+#    'iFriends.middleware.custom.CustomRequestLogger',
+#    'iFriends.middleware.custom.CustomViewLogger',
+#    'iFriends.middleware.custom.CustomResponseLogger',
+#    'iFriends.middleware.custom.CustomExceptionLogger',
+#    'iFriends.middleware.custom.AddFooter',
+#    'iFriends.middleware.custom.PersonIPAddressCapture',
 )
 
 ROOT_URLCONF = 'iFriends.urls'
@@ -131,3 +133,5 @@ PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 LOCALE_PATHS = (
     os.path.join(PROJECT_PATH, '../locale'),
 )
+
+SITE_ID = 1

@@ -5,6 +5,8 @@ from django.views.generic.dates import ArchiveIndexView, YearArchiveView
 from django.views.generic.dates import MonthArchiveView
 from People.models import Blog
 from Quotes.models import Quote
+from sitemaps import PersonSitemap
+from django.contrib.sitemaps import GenericSitemap
 
 from django.contrib import admin
 admin.autodiscover()
@@ -148,3 +150,32 @@ urlpatterns += patterns('',
     url(r'^generic/blog_delete/(?P<pk>\d+)/$', csrf_exempt(BlogDeleteView.as_view())),
 )
 
+blog_detail_info = {
+    'queryset' : Blog.objects.all(),
+    'date_field' : 'date',
+    'template_object_name': 'blog',
+    'template_name' : 'Blogs/blog_detail.html',
+}
+
+quote_detail_info = {
+    'queryset' : Quote.objects.all(),
+    'date_field' : 'date',
+    'template_object_name': 'quote',
+    'template_name' : 'Quotes/quote_detail.html',
+}
+
+sitemaps = {
+    'person': PersonSitemap,
+    'blog': GenericSitemap(blog_detail_info, priority=0.3,
+                           changefreq='weekly'),
+    'quote': GenericSitemap(quote_detail_info, priority=0.3,
+                           changefreq='weekly'),
+}
+
+urlpatterns += patterns('',
+    (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap',
+                        {'sitemaps': sitemaps}),
+    (r'^sitemap-(?P<section>.+).xml$',
+   'django.contrib.sitemaps.views.sitemap',
+                        {'sitemaps': sitemaps}),
+)

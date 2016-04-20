@@ -16,6 +16,9 @@ class Blog(models.Model):
     def blog_size (self):
         return len(self.text)
 
+    def get_absolute_url(self):
+        return '/generic/blog_details/%d' % self.id
+
     class Meta:
         permissions = (
             ('can_blog', 'Allowed to Blog'),

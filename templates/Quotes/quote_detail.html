@@ -1,0 +1,15 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}Quote Detail{% endblock %}
+{% block content %}
+<table width=100%>
+<tr bgcolor="aabbcc"><td colspan="3">
+<font size="5" color="white">Quote Detail</font>
+</td></tr>
+<tr valign="top"><td width=30% bgcolor=" aadddd ">
+<font size="5">
+{{ object.text }}
+<font size="3">-{{ object.by }}</font>
+</font></td></tr>
+</table>
+{% endblock %}
