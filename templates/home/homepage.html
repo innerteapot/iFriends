@@ -23,10 +23,13 @@
 {% endfor %}
 </td>
 <td width="30%">
-<h2>Largest Blog</h2>
-    {% getLargestBlog bList %}
-    <a href="/generic/blog_details/{{ largestBlog.id }}">
-        {{ largestBlog.title }}</a>
+<h2>Announcements</h2>
+{% for a in announceList %}
+    <li>
+    <a href="#">
+        {{ a.title }}</a>
+    </li>
+{% endfor %}
 </td>
 <td width="40%">
     {% include "quote.html" %}

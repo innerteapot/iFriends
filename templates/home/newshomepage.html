@@ -1,0 +1,39 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}News Home Page{% endblock %}
+{% block content %}
+{% load custom_tags %}
+<table width=100%>
+<tr bgcolor="aabbcc"><td colspan="3">
+<font size="5" color="white">News Home Page</font>
+</td></tr>
+<tr valign="top">
+<td width="30%">
+<h2>People</h2>
+{% for p in pList %}
+    <li>
+    <a href="/">
+        {{ p.name }}</a>
+    </li>
+{% endfor %}
+</td>
+<td width="30%">
+<h2>Announcements</h2>
+{% for a in announceList %}
+    <li>
+    <a href="/">
+        {{ a.title }}</a>
+    </li>
+{% endfor %}
+</td>
+<td width="40%">
+<h2>News Stories</h2>
+{% for s in storyList %}
+    <li>
+    <a href="/">
+        {{ s.title }}</a>
+    </li>
+{% endfor %}
+</td>
+</tr>
+{% endblock %}

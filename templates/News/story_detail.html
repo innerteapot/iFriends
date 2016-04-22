@@ -1,0 +1,16 @@
+{% extends "iFriends_base.html" %}
+
+{% block title %}Story Detail{% endblock %}
+{% block content %}
+<table width=100%>
+<tr bgcolor="aabbcc"><td colspan="3">
+<font size="5" color="white">Story Detail</font>
+</td></tr>
+<tr valign="top"><td width=30% bgcolor=" aadddd ">
+<font size="5">
+<b>{{ object.title }}</b><br />
+<br />
+{{ object.text }}
+</font></td></tr>
+</table>
+{% endblock %}

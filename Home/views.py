@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django import forms
-from People.models import Person, Blog
+from People.models import Person
 from Quotes.models import Quote
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User, Group
@@ -9,6 +9,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.template import RequestContext
 from django.utils.translation import gettext
 from django.utils import translation
+from django.contrib.sites.models import Site
+from News.models import Story, Announcement
 
 class EmailForm(forms.Form):
     title = forms.CharField(max_length=50,
@@ -42,22 +44,20 @@ def contact_view(request):
     return render_to_response('home/contact_form.html', { 'eForm':eForm })
 
 def home_view(request):
-    quotes = Quote.objects.all()
-    pList = Person.objects.all()
+    rDict = {}
+    rDict['pList'] = Person.objects.all()
+    rDict['announceList'] = Announcement.on_site.all()
 
-    if request.user.is_authenticated():
-        bList = Blog.objects.all()
-    else:
-        bList = []
+    currentSite = Site.objects.get_current()
+    if (currentSite.domain == 'iFriends.test'):
+        hpTemplate = 'home/homepage.html'
+        rDict['quotes'] = Quote.objects.all()
+    elif (currentSite.domain == 'iNews.test'):
+        hpTemplate = 'home/newshomepage.html'
+        rDict['storyList'] = Story.on_site.all()
 
-    return render_to_response('home/homepage.html',
-        {
-            'quotes': quotes,
-            'pList': pList,
-            'bList': bList
-        },
-        context_instance = RequestContext(request)
-    )
+    return render_to_response(hpTemplate, rDict,
+                              context_instance = RequestContext(request))
 
 @csrf_exempt
 def create_user(request):

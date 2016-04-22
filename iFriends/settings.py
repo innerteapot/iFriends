@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'Custom',
     'Poll',
     'Log',
+    'News',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -134,4 +135,4 @@ LOCALE_PATHS = (
     os.path.join(PROJECT_PATH, '../locale'),
 )
 
-SITE_ID = 1
+SITE_ID = 2
