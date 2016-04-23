@@ -9,6 +9,8 @@ from datetime import datetime
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.core.cache import cache
+from django.views.decorators.vary import vary_on_headers
 
 class BlogForm(forms.ModelForm):
     class Meta:
@@ -22,8 +24,12 @@ class BlogForm(forms.ModelForm):
 
 # Create your views here.
 
+@vary_on_headers('User-Agent')
 def index(request):
-    pList = Person.objects.all()
+    pList = cache.get('PersonList')
+    if pList == None:
+        pList = Person.objects.all()
+        cache.set('PersonList', pList, 600)
     return render_to_response('people/person_index.html', {'pList': pList})
 
 

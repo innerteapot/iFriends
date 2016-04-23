@@ -55,6 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.CacheMiddleware',
 #    'iFriends.middleware.custom.CustomRequestLogger',
 #    'iFriends.middleware.custom.CustomViewLogger',
 #    'iFriends.middleware.custom.CustomResponseLogger',
@@ -136,3 +137,7 @@ LOCALE_PATHS = (
 )
 
 SITE_ID = 2
+
+CACHE_BACKEND = 'db://ifriends_cache?timeout=120&max_entries=200'
+CACHE_MIDDLEWARE_SECONDS = 120
+CACHE_MIDDLEWARE_KEY_PREFIX = 'iFriends'

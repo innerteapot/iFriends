@@ -11,6 +11,8 @@ from django.utils.translation import gettext
 from django.utils import translation
 from django.contrib.sites.models import Site
 from News.models import Story, Announcement
+from django.core.cache import cache
+from django.views.decorators.cache import cache_control
 
 class EmailForm(forms.Form):
     title = forms.CharField(max_length=50,
@@ -43,9 +45,14 @@ def contact_view(request):
     eForm = EmailForm()
     return render_to_response('home/contact_form.html', { 'eForm':eForm })
 
+@cache_control(private=True, max_age=600)
 def home_view(request):
     rDict = {}
-    rDict['pList'] = Person.objects.all()
+    pList = cache.get('PersonList')
+    if pList == None:
+        pList = Person.objects.all()
+        cache.set('PersonList', pList, 600)
+    rDict['pList'] = pList
     rDict['announceList'] = Announcement.on_site.all()
 
     currentSite = Site.objects.get_current()
